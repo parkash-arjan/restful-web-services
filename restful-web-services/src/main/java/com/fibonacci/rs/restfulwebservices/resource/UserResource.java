@@ -3,6 +3,8 @@ package com.fibonacci.rs.restfulwebservices.resource;
 import java.net.URI;
 import java.util.List;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -48,7 +50,7 @@ public class UserResource {
 	}
 
 	@PostMapping(path = "/users")
-	public ResponseEntity<User> createUser(@RequestBody User user) {
+	public ResponseEntity<User> createUser(@Valid @RequestBody User user) {
 		User saveduser = dao.save(user);
 		// HTTP STATUS CREATED
 		// RETURN URI
