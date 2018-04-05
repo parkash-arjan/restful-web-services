@@ -38,18 +38,15 @@ public class UserResource {
 		return user;
 	}
 
-	
 	@DeleteMapping(path = "/users/{id}")
 	public User deleteUserById(@PathVariable Long id) {
 		User user = dao.deleteById(id);
 		if (user == null) {
-
 			throw new UserNotFoundException(String.format("User with id %s not found", id));
 		}
 		return user;
-	}	
-	
-	
+	}
+
 	@PostMapping(path = "/users")
 	public ResponseEntity<User> createUser(@RequestBody User user) {
 		User saveduser = dao.save(user);
