@@ -1,11 +1,14 @@
 package com.fibonacci.rs.restfulwebservices.resource;
 
+import static org.springframework.hateoas.mvc.ControllerLinkBuilder.*;
 import java.net.URI;
 import java.util.List;
 
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.hateoas.Resource;
+import org.springframework.hateoas.mvc.ControllerLinkBuilder;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -34,10 +37,25 @@ public class UserResource {
 	public User findUser(@PathVariable Long id) {
 		User user = dao.findOne(id);
 		if (user == null) {
-
 			throw new UserNotFoundException(String.format("User with id %s not found", id));
 		}
+
 		return user;
+	}
+
+	@GetMapping(path = "/users-hateos/{id}")
+	public Resource<User> findUserHATEOAS(@PathVariable Long id) {
+		User user = dao.findOne(id);
+		if (user == null) {
+			throw new UserNotFoundException(String.format("User with id %s not found", id));
+		}
+
+		Resource<User> resource = new Resource<>(user);
+
+		// ControllerLinkBuilder.linkTo( methodOn(this.getClass()).getAllUsers() );
+		ControllerLinkBuilder linkTo = linkTo(methodOn(this.getClass()).getAllUsers());
+		resource.add(linkTo.withRel("/all-users"));
+		return resource;
 	}
 
 	@DeleteMapping(path = "/users/{id}")
