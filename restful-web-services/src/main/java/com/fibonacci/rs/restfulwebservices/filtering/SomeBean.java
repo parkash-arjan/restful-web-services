@@ -1,8 +1,21 @@
 package com.fibonacci.rs.restfulwebservices.filtering;
 
+import com.fasterxml.jackson.annotation.JsonFilter;
+
+//import com.fasterxml.jackson.annotation.JsonIgnore;
+//import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
+//static filtering
+//@JsonIgnoreProperties(value= {"value1","value3"})
+
+//dynamic filtering
+@JsonFilter("SomeBeanFilter")
 public class SomeBean {
 
 	private String value1;
+
+	// static filtering
+	// @JsonIgnore
 	private String value2;
 	private String value3;
 
